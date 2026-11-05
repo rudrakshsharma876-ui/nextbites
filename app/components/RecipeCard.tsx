@@ -1,5 +1,7 @@
 // app/components/RecipeCard.tsx
-// One reusable, typed card. Feed it any Recipe and it renders that recipe.
+// One reusable, typed card. Feed it a Recipe and it renders that recipe,
+// linking through to the recipe's own page at /recipe/<id>.
+import Link from "next/link";
 import type { Recipe } from "../data/recipes";
 
 type RecipeCardProps = {
@@ -8,7 +10,7 @@ type RecipeCardProps = {
 
 export default function RecipeCard({ recipe }: RecipeCardProps) {
   return (
-    <article className="card">
+    <Link href={`/recipe/${recipe.id}`} className="card">
       <div className="card-art" aria-hidden="true">
         {recipe.emoji}
       </div>
@@ -22,6 +24,6 @@ export default function RecipeCard({ recipe }: RecipeCardProps) {
           <span>{recipe.cuisine}</span>
         </div>
       </div>
-    </article>
+    </Link>
   );
 }
