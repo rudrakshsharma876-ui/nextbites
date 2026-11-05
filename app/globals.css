@@ -1,13 +1,35 @@
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #fffaf5;
+  --foreground: #1f1a17;
+  --muted: #6b625c;
+  --surface: #ffffff;
+  --border: #f0e4d8;
+  --accent: #e8590c;
+  --accent-soft: #fff0e6;
+  --easy: #2b8a3e;
+  --medium: #b7791f;
+  --hard: #c92a2a;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #14110f;
+    --foreground: #f3ede8;
+    --muted: #a89f98;
+    --surface: #1e1a17;
+    --border: #2f2925;
+    --accent: #ff7a2f;
+    --accent-soft: #2b1d14;
+    --easy: #69db7c;
+    --medium: #ffd43b;
+    --hard: #ff8787;
   }
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
 }
 
 html,
@@ -17,20 +39,253 @@ body {
 }
 
 body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
 }
 
 a {
   color: inherit;
   text-decoration: none;
+}
+
+/* ---------- Nav bar (shared via layout) ---------- */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+
+.navbar-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand {
+  font-weight: 800;
+  font-size: 1.25rem;
+  color: var(--accent);
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+  font-weight: 500;
+}
+
+.nav-links a:hover {
+  color: var(--accent);
+}
+
+/* ---------- Page ---------- */
+.container {
+  flex: 1;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px 16px 56px;
+}
+
+.hero {
+  margin-bottom: 32px;
+}
+
+.hero h1 {
+  font-size: clamp(2rem, 5vw, 3rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.hero p {
+  margin-top: 8px;
+  color: var(--muted);
+}
+
+/* ---------- Responsive recipe grid ---------- */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 20px;
+}
+
+/* ---------- Recipe card ---------- */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+}
+
+.card-art {
+  display: grid;
+  place-items: center;
+  height: 140px;
+  font-size: 4rem;
+  background: var(--accent-soft);
+}
+
+.card-body {
+  padding: 16px;
+}
+
+.card-body h3 {
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+}
+
+.card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  font-size: 0.875rem;
+  color: var(--muted);
+}
+
+.badge {
+  font-weight: 600;
+}
+
+.badge-easy {
+  color: var(--easy);
+}
+
+.badge-medium {
+  color: var(--medium);
+}
+
+.badge-hard {
+  color: var(--hard);
+}
+
+.card {
+  display: block;
+}
+
+.card:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ---------- Search ---------- */
+.search {
+  width: 100%;
+  max-width: 480px;
+  margin-bottom: 24px;
+  padding: 12px 16px;
+  font: inherit;
+  color: var(--foreground);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+}
+
+.search:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.empty {
+  padding: 48px 16px;
+  text-align: center;
+  color: var(--muted);
+  background: var(--surface);
+  border: 1px dashed var(--border);
+  border-radius: 16px;
+}
+
+/* ---------- Recipe detail page ---------- */
+.back-link {
+  display: inline-block;
+  margin-bottom: 24px;
+  font-weight: 500;
+  color: var(--accent);
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}
+
+.detail-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.detail-art {
+  display: grid;
+  place-items: center;
+  width: 120px;
+  height: 120px;
+  font-size: 4rem;
+  background: var(--accent-soft);
+  border-radius: 24px;
+}
+
+.detail-header h1 {
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  line-height: 1.15;
+  margin-bottom: 8px;
+}
+
+.detail-meta {
+  font-size: 1rem;
+}
+
+.detail-body {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+.detail-body section {
+  padding: 24px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+}
+
+.detail-body h2 {
+  font-size: 1.2rem;
+  margin-bottom: 12px;
+}
+
+.ingredients,
+.steps {
+  padding-left: 20px;
+}
+
+.ingredients li,
+.steps li {
+  margin-bottom: 8px;
+}
+
+/* ---------- Footer ---------- */
+.footer {
+  padding: 24px 16px;
+  text-align: center;
+  font-size: 0.875rem;
+  color: var(--muted);
+  border-top: 1px solid var(--border);
 }
