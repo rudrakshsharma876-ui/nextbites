@@ -1,6 +1,7 @@
 // app/page.tsx
-// Home page: maps the recipes array into a responsive grid of RecipeCards.
-import RecipeCard from "./components/RecipeCard";
+// Home page stays a server component: it reads the data and hands it
+// to the client RecipeGrid, which handles the interactive search.
+import RecipeGrid from "./components/RecipeGrid";
 import { recipes } from "./data/recipes";
 
 export default function Home() {
@@ -14,11 +15,7 @@ export default function Home() {
         </p>
       </section>
 
-      <div className="grid">
-        {recipes.map((recipe) => (
-          <RecipeCard key={recipe.id} recipe={recipe} />
-        ))}
-      </div>
+      <RecipeGrid recipes={recipes} />
     </main>
   );
 }
